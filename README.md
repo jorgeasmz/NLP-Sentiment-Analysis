@@ -1,3 +1,13 @@
+---
+title: NLP Sentiment Analysis
+emoji: 🧠
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+app_port: 7860
+---
+
 # NLP Sentiment Analysis Service
 
 A modular sentiment analysis system utilizing a fine-tuned DistilBERT model, served via a FastAPI backend and a Streamlit frontend.
