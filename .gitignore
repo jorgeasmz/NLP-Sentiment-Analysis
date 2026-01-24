@@ -17,6 +17,7 @@ env/
 *.bin
 *.h5
 cached_path/
+model_cache/
 
 # System
 .DS_Store
