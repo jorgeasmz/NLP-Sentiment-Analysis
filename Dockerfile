@@ -13,8 +13,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the API code folder
+# Copy the API code folders
 COPY ./api ./api
+COPY ./core ./core
 
 # Create the cache directory and fix permissions for the HF user
 RUN mkdir -p /app/.cache && chmod -R 777 /app/.cache
