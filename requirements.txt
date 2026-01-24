@@ -1,0 +1,7 @@
+streamlit
+fastapi
+uvicorn
+pydantic
+requests
+transformers
+torch --index-url https://download.pytorch.org/whl/cpu

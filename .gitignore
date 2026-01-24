@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual Environments
+venv/
+env/
+.env
+.venv
+
+# IDE Settings
+.vscode/
+
+# Model Weights and Cache
+*.bin
+*.h5
+cached_path/
+
+# System
+.DS_Store
+Thumbs.db
