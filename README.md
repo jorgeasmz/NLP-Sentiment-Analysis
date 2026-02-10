@@ -12,6 +12,8 @@ app_port: 7860
 
 A modular sentiment analysis system utilizing a fine-tuned DistilBERT model, served via a FastAPI backend and a Streamlit frontend.
 
+**Live Demo:** [Streamlit App](https://jorgeasmz-nlp-sentiment-analysis.streamlit.app/)
+
 ## Technical Architecture
 
 The project implements a layered architecture to ensure separation of concerns between model inference, API handling, and the user interface.
