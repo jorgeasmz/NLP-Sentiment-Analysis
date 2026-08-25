@@ -14,6 +14,8 @@ A modular sentiment analysis system utilizing a fine-tuned DistilBERT model, ser
 
 **Live Demo:** [Streamlit App](https://jorgeasmz-nlp-sentiment-analysis.streamlit.app/)
 
+**Live API:** [Swagger UI](https://jorgeasmz-nlp-sentiment-analysis.hf.space/docs)
+
 ## Technical Architecture
 
 The project implements a layered architecture to ensure separation of concerns between model inference, API handling, and the user interface.
