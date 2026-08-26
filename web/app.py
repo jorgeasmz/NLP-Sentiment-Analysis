@@ -1,6 +1,7 @@
-import streamlit as st
-import requests
 import os
+
+import requests
+import streamlit as st
 
 # CONFIGURATION
 # -----------------------------------------------------------------------------
@@ -11,6 +12,10 @@ except (FileNotFoundError, KeyError):
 
 # Ensure no trailing slash to avoid connection errors
 API_URL = API_URL.rstrip("/")
+
+# Free Hugging Face Spaces sleep when idle and need time to wake and reload
+# the checkpoint, so the first request of the day needs a generous budget.
+REQUEST_TIMEOUT = int(os.getenv("API_TIMEOUT", "90"))
 
 # PAGE SETUP
 # -----------------------------------------------------------------------------
@@ -80,7 +85,11 @@ if analyze_button:
         with st.spinner("Talking to the AI Brain..."):
             try:
                 # 1. Send request to our FastAPI Backend
-                response = requests.post(f"{API_URL}/predict", json={"text": user_input})
+                response = requests.post(
+                    f"{API_URL}/predict",
+                    json={"text": user_input},
+                    timeout=REQUEST_TIMEOUT,
+                )
                 
                 # 2. Check for success
                 if response.status_code == 200:
@@ -123,6 +132,11 @@ if analyze_button:
                     st.error(f"❌ Server Error: {response.status_code}")
                     st.write(response.text)
                     
+            except requests.exceptions.Timeout:
+                st.warning(
+                    f"No answer within {REQUEST_TIMEOUT}s. A sleeping free-tier "
+                    "backend may still be waking up. Try again in a moment."
+                )
             except requests.exceptions.ConnectionError:
                 st.error("❌ Connection Failed")
                 st.markdown(
