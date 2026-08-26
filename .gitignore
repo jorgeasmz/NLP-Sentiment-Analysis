@@ -22,3 +22,9 @@ model_cache/
 # System
 .DS_Store
 Thumbs.db
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/

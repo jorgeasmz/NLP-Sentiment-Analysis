@@ -1,0 +1,147 @@
+[
+  {
+    "text": "I absolutely loved this movie, it was fantastic.",
+    "expected": "POSITIVE",
+    "category": "clear_positive"
+  },
+  {
+    "text": "Best purchase I have made all year.",
+    "expected": "POSITIVE",
+    "category": "clear_positive"
+  },
+  {
+    "text": "The service was quick, friendly and genuinely helpful.",
+    "expected": "POSITIVE",
+    "category": "clear_positive"
+  },
+  {
+    "text": "This exceeded every expectation I had.",
+    "expected": "POSITIVE",
+    "category": "clear_positive"
+  },
+  {
+    "text": "A beautiful, moving and unforgettable performance.",
+    "expected": "POSITIVE",
+    "category": "clear_positive"
+  },
+  {
+    "text": "Delicious food and a wonderful atmosphere.",
+    "expected": "POSITIVE",
+    "category": "clear_positive"
+  },
+  {
+    "text": "This is the worst experience I have ever had.",
+    "expected": "NEGATIVE",
+    "category": "clear_negative"
+  },
+  {
+    "text": "Completely broken on arrival and impossible to return.",
+    "expected": "NEGATIVE",
+    "category": "clear_negative"
+  },
+  {
+    "text": "Rude staff and an unacceptably long wait.",
+    "expected": "NEGATIVE",
+    "category": "clear_negative"
+  },
+  {
+    "text": "A boring, predictable waste of two hours.",
+    "expected": "NEGATIVE",
+    "category": "clear_negative"
+  },
+  {
+    "text": "The quality is appalling for the price.",
+    "expected": "NEGATIVE",
+    "category": "clear_negative"
+  },
+  {
+    "text": "It stopped working after a single day.",
+    "expected": "NEGATIVE",
+    "category": "clear_negative"
+  },
+  {
+    "text": "I would not recommend this to anyone.",
+    "expected": "NEGATIVE",
+    "category": "negation"
+  },
+  {
+    "text": "This is not good at all.",
+    "expected": "NEGATIVE",
+    "category": "negation"
+  },
+  {
+    "text": "Nothing about this was worth the money.",
+    "expected": "NEGATIVE",
+    "category": "negation"
+  },
+  {
+    "text": "I can't say I enjoyed a single minute of it.",
+    "expected": "NEGATIVE",
+    "category": "negation"
+  },
+  {
+    "text": "I can't fault it in any way.",
+    "expected": "POSITIVE",
+    "category": "negation"
+  },
+  {
+    "text": "There is nothing here I would change.",
+    "expected": "POSITIVE",
+    "category": "negation"
+  },
+  {
+    "text": "The acting was great but the story dragged and I lost interest entirely.",
+    "expected": "NEGATIVE",
+    "category": "mixed"
+  },
+  {
+    "text": "Nice design, shame it breaks after a week of light use.",
+    "expected": "NEGATIVE",
+    "category": "mixed"
+  },
+  {
+    "text": "The wait was long, but the meal was absolutely worth it.",
+    "expected": "POSITIVE",
+    "category": "mixed"
+  },
+  {
+    "text": "It has some rough edges, yet I would still buy it again.",
+    "expected": "POSITIVE",
+    "category": "mixed"
+  },
+  {
+    "text": "Oh brilliant, another update that breaks everything.",
+    "expected": "NEGATIVE",
+    "category": "sarcasm"
+  },
+  {
+    "text": "Wonderful, it arrived in three pieces. Exactly what I wanted.",
+    "expected": "NEGATIVE",
+    "category": "sarcasm"
+  },
+  {
+    "text": "Great job, you managed to lose my order twice.",
+    "expected": "NEGATIVE",
+    "category": "sarcasm"
+  },
+  {
+    "text": "Love it.",
+    "expected": "POSITIVE",
+    "category": "short"
+  },
+  {
+    "text": "Perfect.",
+    "expected": "POSITIVE",
+    "category": "short"
+  },
+  {
+    "text": "Terrible.",
+    "expected": "NEGATIVE",
+    "category": "short"
+  },
+  {
+    "text": "Never again.",
+    "expected": "NEGATIVE",
+    "category": "short"
+  }
+]
