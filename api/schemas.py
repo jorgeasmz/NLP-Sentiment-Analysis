@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 
+
 class SentimentRequest(BaseModel):
     """
     Defines the structure of the input data expected by the API.
