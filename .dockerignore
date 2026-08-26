@@ -1,0 +1,19 @@
+# Keeps the Hugging Face Space image lean and avoids rebuilding it for
+# changes that do not affect the service.
+venv/
+.venv/
+tests/
+data/
+evaluate.py
+requirements-dev.txt
+pytest.ini
+ruff.toml
+.github/
+.git/
+.gitignore
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+.ruff_cache/
+model_cache/

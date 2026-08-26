@@ -1,27 +1,32 @@
-FROM python:3.9-slim
+FROM python:3.12-slim
 
-# Set working directory
 WORKDIR /app
 
-# Set environment variables to fix permission issues on Hugging Face
+# Hugging Face writes its cache here. TRANSFORMERS_CACHE is deprecated in
+# favour of HF_HOME, so only the latter is set.
 ENV HF_HOME=/app/.cache
-ENV TRANSFORMERS_CACHE=/app/.cache
-ENV PORT=7860
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Copy requirements and install
 COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the API code folders
+# web/ is copied too: docker-compose runs the Streamlit client from this same
+# image, and without it that service has no entry point to start.
 COPY ./api ./api
 COPY ./core ./core
+COPY ./web ./web
 
-# Create the cache directory and fix permissions for the HF user
+# Bake the weights into the image so a cold container does not spend its first
+# request downloading 250 MB from the Hub.
+RUN python -c "from core.model_loader import get_model; get_model()"
+
 RUN mkdir -p /app/.cache && chmod -R 777 /app/.cache
 
-# Expose the Hugging Face port
 EXPOSE 7860
 
-# Command to start the API
-CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "7860"]
+# Hugging Face Spaces and most container hosts inject $PORT. Exec form would
+# not expand it, so this goes through sh; "exec" keeps uvicorn as PID 1 so it
+# still receives SIGTERM.
+CMD ["sh", "-c", "exec uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-7860}"]
