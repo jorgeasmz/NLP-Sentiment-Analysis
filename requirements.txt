@@ -1,7 +1,13 @@
-streamlit
-fastapi
-uvicorn
-pydantic
-requests
-transformers
-torch --index-url https://download.pytorch.org/whl/cpu
+# The CPU wheels live on PyTorch's own index. This directive has to sit on its
+# own line: appended to a requirement it is silently ignored, and pip then
+# resolves torch from PyPI, pulling in several GB of CUDA libraries that a
+# CPU-only deployment never uses.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+streamlit==1.62.0
+fastapi==0.141.1
+uvicorn==0.52.4
+pydantic==2.13.4
+requests==2.34.2
+transformers==5.15.1
+torch==2.13.0+cpu
