@@ -18,9 +18,9 @@ COPY ./api ./api
 COPY ./core ./core
 COPY ./web ./web
 
-# Bake the weights into the image so a cold container does not spend its first
-# request downloading 250 MB from the Hub.
-RUN python -c "from core.model_loader import get_model; get_model()"
+# Bake both heads into the image so a cold container does not spend its first
+# request downloading them from the Hub.
+RUN python -c "from core.model_loader import get_irony_model, get_model; get_model(); get_irony_model()"
 
 RUN mkdir -p /app/.cache && chmod -R 777 /app/.cache
 

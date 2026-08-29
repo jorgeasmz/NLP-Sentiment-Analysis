@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
 
 from api.schemas import SentimentRequest, SentimentResponse
-from core.model_loader import get_model
+from core.model_loader import get_irony_model, get_model
 from core.service import analyze_text
 
 logger = logging.getLogger(__name__)
@@ -13,19 +13,22 @@ logger = logging.getLogger(__name__)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Pre-loads the model so the first caller does not pay for it.
+    Pre-loads both heads so the first caller does not pay for them.
 
     A failure is recorded rather than raised: the service still answers the
     health check, which is what lets an orchestrator report a degraded state
-    instead of restarting the container in a loop.
+    instead of restarting the container in a loop. Every response carries an
+    irony verdict, so a half-loaded service is not a usable one and readiness
+    covers both models rather than reporting them separately.
     """
-    logger.info("Server starting up: pre-loading NLP model.")
+    logger.info("Server starting up: pre-loading models.")
     try:
         get_model()
+        get_irony_model()
         app.state.model_ready = True
-        logger.info("NLP model loaded successfully.")
+        logger.info("Models loaded successfully.")
     except Exception:
-        logger.exception("Failed to load model on startup.")
+        logger.exception("Failed to load models on startup.")
         app.state.model_ready = False
 
     yield
@@ -35,8 +38,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="NLP Sentiment Analysis API",
-    description="A lightweight API for real-time text classification using DistilBERT.",
-    version="1.0.0",
+    description=(
+        "Real-time text classification with two DistilBERT heads: sentiment from a "
+        "pre-trained checkpoint, irony from a head fine-tuned on TweetEval and served "
+        "as a quantised ONNX graph."
+    ),
+    version="2.0.0",
     lifespan=lifespan,
 )
 
@@ -57,7 +64,7 @@ def health_check(request: Request):
 @app.post("/predict", response_model=SentimentResponse)
 def predict_sentiment(request: SentimentRequest):
     """
-    Receives text, runs the model and returns the sentiment with its confidence.
+    Receives text, runs both heads and returns the sentiment with its irony verdict.
     """
     try:
         return analyze_text(request.text)

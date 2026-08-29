@@ -16,9 +16,23 @@ class SentimentRequest(BaseModel):
         }
     }
 
+
+class IronyAssessment(BaseModel):
+    """
+    Defines the irony verdict that accompanies every sentiment label.
+    """
+    detected: bool = Field(
+        ...,
+        description="True when the irony head scores above its threshold, in which "
+        "case the sentiment label describes the surface wording rather than the intent",
+    )
+    score: float = Field(..., description="Probability that the text is ironic (0.0 to 1.0)")
+
+
 class SentimentResponse(BaseModel):
     """
     Defines the structure of the output data returned by the API.
     """
     label: str = Field(..., description="The sentiment label (POSITIVE or NEGATIVE)")
     score: float = Field(..., description="The confidence score (0.0 to 1.0)")
+    irony: IronyAssessment

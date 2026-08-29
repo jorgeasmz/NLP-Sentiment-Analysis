@@ -55,8 +55,10 @@ st.markdown("""
 # -----------------------------------------------------------------------------
 st.title("🧠 AI Sentiment Analyzer")
 st.markdown("""
-Welcome! This application uses a **DistilBERT** Transformer model to understand the 
-emotion behind your text in real-time.
+This application runs two **DistilBERT** heads over your text: one reads sentiment,
+the other decides whether the text is ironic. The second exists because the first
+reads surface wording, and ironic text inverts its answer without lowering its
+confidence.
 """)
 
 st.write("---")
@@ -73,7 +75,11 @@ with col1:
     )
 
 with col2:
-    st.info("💡 **Tip:** Try complex sentences with mixed feelings to see how the model reacts.")
+    st.info(
+        "💡 **Tip:** Try a sarcastic line such as *'Oh brilliant, another update that "
+        "breaks everything.'* and watch the two heads disagree. The irony head is "
+        "fine-tuned on tweets, so it reads short informal text best."
+    )
     analyze_button = st.button("🔍 Analyze Sentiment", type="primary", use_container_width=True)
 
 # LOGIC & RESULTS
@@ -123,7 +129,20 @@ if analyze_button:
                             unsafe_allow_html=True
                         )
                     
-                    # 4. Technical Details (Expandable)
+                    # 4. Irony verdict, which qualifies the label above
+                    irony = data.get("irony", {})
+                    if irony.get("detected"):
+                        st.warning(
+                            f"🎭 Irony detected ({irony['score']:.0%}). The label above "
+                            "describes the wording, not the intent."
+                        )
+                    elif irony:
+                        st.caption(
+                            f"Irony score {irony['score']:.0%}, below the decision "
+                            "threshold selected on the TweetEval validation split."
+                        )
+
+                    # 5. Technical Details (Expandable)
                     with st.expander("See Technical Details"):
                         st.json(data)
                         st.code(f"POST {API_URL}/predict\nPayload: {str({'text': user_input})}", language="http")

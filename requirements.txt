@@ -11,3 +11,7 @@ pydantic==2.13.4
 requests==2.34.2
 transformers==5.15.1
 torch==2.13.0+cpu
+
+# The irony head is served as a quantised ONNX graph, so the runtime that
+# executes it is a serving dependency, not a training one.
+onnxruntime==1.29.0

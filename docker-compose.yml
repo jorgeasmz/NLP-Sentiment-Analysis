@@ -7,6 +7,7 @@ services:
       - "8000:8000"
     environment:
       - MODEL_NAME=distilbert/distilbert-base-uncased-finetuned-sst-2-english
+      - IRONY_MODEL_REPO=jorgeasmz/distilbert-irony-tweeteval
     volumes:
       # Must match HF_HOME in the Dockerfile, or the cache silently lands
       # somewhere the library never reads and the model re-downloads on every
