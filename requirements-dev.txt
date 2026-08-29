@@ -1,4 +1,8 @@
--r requirements.txt
+# Pulls the training set of dependencies rather than the serving one: the suite
+# covers the metric definitions that model selection depends on, and pinning
+# them twice is how the two files drift.
+-r requirements-train.txt
+
 pytest
 pytest-cov
 httpx
