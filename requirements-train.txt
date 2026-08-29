@@ -1,0 +1,13 @@
+# Training-only dependencies. They stay out of requirements.txt because the
+# serving image has no reason to carry Trainer, a dataset loader or a tracking
+# server: that is roughly 700 MB of layers that never answer a request.
+-r requirements.txt
+
+datasets==5.0.1
+accelerate==1.14.0
+scikit-learn==1.9.0
+mlflow==3.15.2
+# torch.onnx.export runs through the dynamo exporter, which builds the graph
+# with onnxscript rather than by tracing TorchScript.
+onnx==1.22.0
+onnxscript==0.7.1

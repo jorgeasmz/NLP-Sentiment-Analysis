@@ -19,6 +19,13 @@ env/
 cached_path/
 model_cache/
 
+# Training outputs. The published artifact lives in a model repository on the
+# Hub; the tracking store and the checkpoints are local to whoever trained.
+artifacts/
+mlflow.db
+mlartifacts/
+mlruns/
+
 # System
 .DS_Store
 Thumbs.db
