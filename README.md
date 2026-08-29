@@ -39,7 +39,7 @@ which is what lets the two halves be deployed independently. The training
 package is absent from the serving image, since `Trainer`, a dataset loader and
 a tracking server add layers that never answer a request.
 
-## Why the service carries two heads
+## Motivation for the irony head
 
 The sentiment checkpoint classifies at the sentence level from surface lexical
 cues. On the curated evaluation set it is wrong on two of the three sarcastic
@@ -94,8 +94,6 @@ the validation split and written to `decision.json` beside the weights, so the
 operating point is an artifact of training rather than a constant in the serving
 code. `IRONY_THRESHOLD` overrides it without retraining.
 
-Two choices in that step are worth stating.
-
 The criterion is macro F1 rather than ironic-class F1, because both error
 directions carry cost for a flag: a missed ironic text leaves a wrong sentiment
 label unqualified, and a false alarm on plain text makes the flag uninformative.
@@ -125,8 +123,8 @@ selected on the quantised graph.
 
 The service loads `onnx-int8`. Exporting the graph halves the latency at
 identical weights, and quantising to int8 halves it again while cutting the
-artifact from 268 MB to 68 MB, for 0.006 of ironic-class F1. On a free tier that
-trade decides whether the image pulls and wakes in reasonable time.
+artifact from 268 MB to 68 MB, for 0.006 of ironic-class F1. On a free tier the
+artifact size governs image pull time and cold-start latency.
 
 ### Sentiment on the curated set
 
