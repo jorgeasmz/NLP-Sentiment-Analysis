@@ -83,16 +83,28 @@ four transformer blocks fixed, leaving 14.8M of 67.0M parameters trainable;
 
 ### The decision threshold
 
-| Operating point | Threshold | Accuracy | Macro F1 | F1 ironic | Precision | Recall |
+The threshold is chosen on the validation split and reported on both, because the
+split a choice is made on cannot also measure it. Every row is the int8 graph, the
+one that serves.
+
+| Split | Threshold | Accuracy | Macro F1 | F1 ironic | Precision | Recall |
 |---|---:|---:|---:|---:|---:|---:|
-| Argmax | 0.50 | 0.675 | **0.672** | 0.706 | 0.622 | 0.818 |
-| Selected | 0.84 | 0.707 | **0.706** | 0.688 | 0.699 | 0.678 |
+| Validation, 955 tweets | 0.50 | 0.669 | 0.665 | 0.703 | 0.615 | 0.820 |
+| Validation | **0.84** | 0.702 | **0.700** | 0.682 | 0.695 | 0.669 |
+| Test, 784 tweets | 0.50 | 0.667 | 0.667 | 0.658 | 0.555 | 0.807 |
+| Test | **0.84** | 0.698 | **0.687** | 0.628 | 0.613 | 0.643 |
 
 Argmax is the threshold 0.5, which is optimal only when the prior the model was
 fitted on matches the one it is asked about. The shipped threshold is selected on
 the validation split and written to `decision.json` beside the weights, so the
 operating point is an artifact of training rather than a constant in the serving
 code. `IRONY_THRESHOLD` overrides it without retraining.
+
+The choice holds up on data it never saw: macro F1 rises from 0.665 to 0.700 on
+the split it was made on and from 0.667 to 0.687 on the one it was not. The
+validation figures are the higher pair, by construction, and quoting them as the
+result would overstate what the deployment reaches by 0.013 of macro F1 and 0.054
+of ironic-class F1.
 
 The criterion is macro F1 rather than ironic-class F1, because both error
 directions carry cost for a flag: a missed ironic text leaves a wrong sentiment
