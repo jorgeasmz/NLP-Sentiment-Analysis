@@ -6,7 +6,10 @@
 datasets==5.0.1
 accelerate==1.14.0
 scikit-learn==1.9.0
-mlflow==3.15.2
+# Matched to what the platform is built against: mlflow and mlflow-skinny
+# refuse to differ, and the platform brings the skinny half.
+mlflow==3.16.0
+ml-platform @ git+https://github.com/jorgeasmz/ML-Platform.git
 # torch.onnx.export runs through the dynamo exporter, which builds the graph
 # with onnxscript rather than by tracing TorchScript.
 onnx==1.22.0
