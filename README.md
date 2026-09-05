@@ -273,7 +273,7 @@ in its own model repository, which is what `IRONY_MODEL_REPO` points at.
 ```bash
 pip install -r requirements-dev.txt
 
-pytest              # 40 tests, 96% coverage of api/ and core/
+pytest              # 49 tests, 96% coverage of api/ and core/
 ruff check .
 ```
 
